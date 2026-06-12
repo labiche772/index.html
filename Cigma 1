@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigma Site - Arrange les Choses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .sigma-display {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sigma-display h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .sigma-values {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .sigma-value {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .math-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .math-section h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .formula {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1em;
+            border: 1px solid #e0e0e0;
+            overflow-x: auto;
+        }
+
+        .result {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .timeline-item h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            opacity: 0.9;
+        }
+
+        .content-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px dashed #667eea;
+        }
+
+        .content-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .content-section textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 1em;
+            resize: vertical;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .url-display {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            border: 2px solid #667eea;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .sigma-values {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 Sigma Site</h1>
+            <p>Arrange les Choses avec les Paramètres Sigma</p>
+        </header>
+
+        <div class="content">
+            <!-- URL Display -->
+            <div class="url-display">
+                <strong>URL Actuelle:</strong><br>
+                <span id="currentUrl"></span>
+            </div>
+
+            <!-- Sigma Display -->
+            <div class="sigma-display">
+                <h2>Paramètres Sigma Actuels</h2>
+                <div class="sigma-values" id="sigmaValues"></div>
+            </div>
+
+            <!-- Timeline des Intervalles -->
+            <div class="math-section">
+                <h3>⏱️ Timeline des Intervalles</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Sigma 6</h4>
+                        <p>Intervalle: 1 seconde</p>
+                        <p id="sigma6-progress">0%</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Sigma 36</h4>
+                        <p>Intervalle: 2 secondes</p>
+                        <p id="sigma36-progress">0%</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Sigma 2</h4>
+                        <p>Intervalle: 2 secondes</p>
+                        <p id="sigma2-progress">0%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mathématiques -->
+            <div class="math-section">
+                <h3>📐 Calculs Mathématiques</h3>
+                
+                <div>
+                    <h4>Formule 1: Somme des Sigma</h4>
+                    <div class="formula">Σ_total = 6 + 36 + 2 = <strong id="sum-result">44</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 2: Moyenne des Sigma</h4>
+                    <div class="formula">μ = (6 + 36 + 2) / 3 = <strong id="mean-result">14.67</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 3: Produit des Sigma</h4>
+                    <div class="formula">∏ = 6 × 36 × 2 = <strong id="product-result">432</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 4: Écart-type (σ)</h4>
+                    <div class="formula">σ = √[((6-14.67)² + (36-14.67)² + (2-14.67)²) / 3] = <strong id="stddev-result">14.24</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 5: Variance</h4>
+                    <div class="formula">Var = σ² = <strong id="variance-result">202.78</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 6: Ratio Sigma 36 / Sigma 6</h4>
+                    <div class="formula">Ratio = 36 / 6 = <strong id="ratio-result">6</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 7: Multiplicateur Sigma (Sigma 6 × Sigma 36 × Sigma 2)</h4>
+                    <div class="formula">Multiplicateur = 6 × 36 × 2 = <strong id="multiplier-result">432</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 8: Somme des Intervalles</h4>
+                    <div class="formula">Intervalle_total = 1s + 2s + 2s = <strong id="interval-result">5 secondes</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 9: Sigma Moyen par Seconde</h4>
+                    <div class="formula">Σ_par_sec = 44 / 5 = <strong id="sigma-per-sec-result">8.8</strong></div>
+                </div>
+
+                <div>
+                    <h4>Formule 10: Arrangement des Choses (Score)</h4>
+                    <div class="formula">Score = (Σ_total × Ratio) / (σ + 1) = <strong id="arrangement-result">184.67</strong></div>
+                    <div class="result">🎯 Cet arrangement arrange les choses avec un score de <strong id="final-score">184.67</strong></div>
+                </div>
+            </div>
+
+            <!-- Paramètres URL -->
+            <div class="math-section">
+                <h3>🔗 Paramètres URL Personnalisés</h3>
+                <p>Utilisez ces paramètres dans l'URL pour modifier les calculs:</p>
+                <div class="formula">
+                    /sigma0=2 (Sigma 0)<br>
+                    /sigma2=4 (Sigma 2)<br>
+                    /sigma2=4 (Sigma 2 bis)
+                </div>
+                <div id="custom-params" style="margin-top: 15px;"></div>
+            </div>
+
+            <!-- Contenu Personnalisé -->
+            <div class="content-section">
+                <h3>📝 Votre Contenu / Pubs</h3>
+                <p>Ajoutez votre contenu ou vos pubs ici:</p>
+                <textarea id="customContent" placeholder="Entrez votre contenu personnalisé..."></textarea>
+                <button onclick="saveContent()">Sauvegarder le Contenu</button>
+                <div id="savedContent" style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; display: none;"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 Sigma Site - Arrange les Choses | Tous les paramètres sigma sont calculés en temps réel</p>
+        </footer>
+    </div>
+
+    <script>
+        // Parse URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return params;
+        }
+
+        // Display current URL
+        function displayUrl() {
+            document.getElementById('currentUrl').textContent = window.location.href;
+        }
+
+        // Calculate all sigma values
+        function calculateSigma() {
+            const sigmas = [6, 36, 2];
+            const sum = sigmas.reduce((a, b) => a + b, 0);
+            const mean = sum / sigmas.length;
+            const variance = sigmas.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) / sigmas.length;
+            const stddev = Math.sqrt(variance);
+            const product = sigmas.reduce((a, b) => a * b, 1);
+            const ratio = 36 / 6;
+            const intervalTotal = 5;
+            const sigmaPerSec = sum / intervalTotal;
+            const arrangement = (sum * ratio) / (stddev + 1);
+
+            // Update display
+            document.getElementById('sum-result').textContent = sum;
+            document.getElementById('mean-result').textContent = mean.toFixed(2);
+            document.getElementById('product-result').textContent = product;
+            document.getElementById('stddev-result').textContent = stddev.toFixed(2);
+            document.getElementById('variance-result').textContent = variance.toFixed(2);
+            document.getElementById('ratio-result').textContent = ratio;
+            document.getElementById('multiplier-result').textContent = product;
+            document.getElementById('interval-result').textContent = '5 secondes';
+            document.getElementById('sigma-per-sec-result').textContent = sigmaPerSec.toFixed(2);
+            document.getElementById('arrangement-result').textContent = arrangement.toFixed(2);
+            document.getElementById('final-score').textContent = arrangement.toFixed(2);
+
+            // Display sigma values
+            const sigmaDisplay = document.getElementById('sigmaValues');
+            sigmaDisplay.innerHTML = sigmas.map((s, i) => 
+                `<div class="sigma-value">Σ${i} = ${s}</div>`
+            ).join('');
+        }
+
+        // Update timeline progress
+        let cycleTime = 0;
+        function updateTimeline() {
+            const totalCycle = 5000; // 5 seconds total
+            const sigma6Duration = 1000;
+            const sigma36Duration = 2000;
+            const sigma2Duration = 2000;
+
+            cycleTime = (cycleTime + 100) % totalCycle;
+
+            let sigma6Progress = (cycleTime / sigma6Duration) * 100;
+            let sigma36Progress = ((cycleTime - sigma6Duration) / sigma36Duration) * 100;
+            let sigma2Progress = ((cycleTime - sigma6Duration - sigma36Duration) / sigma2Duration) * 100;
+
+            if (sigma6Progress > 100) sigma6Progress = 0;
+            if (sigma36Progress < 0 || sigma36Progress > 100) sigma36Progress = 0;
+            if (sigma2Progress < 0 || sigma2Progress > 100) sigma2Progress = 0;
+
+            document.getElementById('sigma6-progress').textContent = Math.round(sigma6Progress) + '%';
+            document.getElementById('sigma36-progress').textContent = Math.round(sigma36Progress) + '%';
+            document.getElementById('sigma2-progress').textContent = Math.round(sigma2Progress) + '%';
+        }
+
+        // Save custom content
+        function saveContent() {
+            const content = document.getElementById('customContent').value;
+            localStorage.setItem('customContent', content);
+            
+            const savedDiv = document.getElementById('savedContent');
+            savedDiv.innerHTML = `<strong>✅ Contenu sauvegardé:</strong><br>${content.replace(/\n/g, '<br>')}`;
+            savedDiv.style.display = 'block';
+        }
+
+        // Load custom content
+        function loadContent() {
+            const saved = localStorage.getItem('customContent');
+            if (saved) {
+                document.getElementById('customContent').value = saved;
+                const savedDiv = document.getElementById('savedContent');
+                savedDiv.innerHTML = `<strong>✅ Contenu sauvegardé:</strong><br>${saved.replace(/\n/g, '<br>')}`;
+                savedDiv.style.display = 'block';
+            }
+        }
+
+        // Display custom URL parameters
+        function displayCustomParams() {
+            const params = getUrlParams();
+            let customParamHtml = '<strong>Paramètres détectés:</strong><br>';
+            
+            if (params.has('sigma0')) {
+                customParamHtml += `Sigma 0 = ${params.get('sigma0')}<br>`;
+            }
+            if (params.has('sigma2')) {
+                customParamHtml += `Sigma 2 = ${params.get('sigma2')}<br>`;
+            }
+            
+            if (customParamHtml === '<strong>Paramètres détectés:</strong><br>') {
+                customParamHtml += 'Aucun paramètre personnalisé détecté. Utilisez ?sigma0=2&sigma2=4';
+            }
+            
+            document.getElementById('custom-params').innerHTML = customParamHtml;
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            displayUrl();
+            calculateSigma();
+            loadContent();
+            displayCustomParams();
+            setInterval(updateTimeline, 100);
+        });
+    </script>
+</body>
+</html>
+index.html
