@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigma</title>
+</head>
+<body>
+
+    <h1>Paramètres Sigma</h1>
+
+    <p>Sigma 1 : <span id="sigma1"></span></p>
+    <p>Sigma 2 : <span id="sigma2"></span></p>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        const sigma1 = params.get("sigma1");
+        const sigma2 = params.get("sigma2");
+
+        document.getElementById("sigma1").textContent = sigma1 ?? "non défini";
+        document.getElementById("sigma2").textContent = sigma2 ?? "non défini";
+    </script>
+
+</body>
+</html>
+index.html
